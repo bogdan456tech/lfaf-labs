@@ -56,28 +56,15 @@ public class Grammar {
             transitions.add(row);
         }
 
-        List<String> s = getList("S");
-        List<String> p = getList("P");
-        List<String> q = getList("Q");
+        List<List<String>> jason = new ArrayList<>(List.of(getList("S"),getList("P"),getList("Q")));
 
-
-        for(int i=0; i<s.size(); i++) {
-            transitions.get(0).set(inputs.get(s.get(i).substring(0,1)),s.get(i).substring(1,2));
-        }
-
-        for(int i=0; i<p.size(); i++) {
-            if(p.get(i).length()==2) {
-                transitions.get(1).set(inputs.get(p.get(i).substring(0,1)),p.get(i).substring(1,2));
-            } else {
-                transitions.get(1).set(inputs.get(p.get(i).substring(0,1)),"X");
-            }
-        }
-
-        for(int i=0; i<q.size(); i++) {
-            if(q.get(i).length()==2) {
-                transitions.get(2).set(inputs.get(q.get(i).substring(0,1)),q.get(i).substring(1,2));
-            } else {
-                transitions.get(2).set(inputs.get(q.get(i).substring(0,1)),"X");
+        for(int i=0; i<3;i++) {
+            for(int j=0; j<jason.get(i).size(); j++) {
+                if(jason.get(i).get(j).length()==2) {
+                    transitions.get(i).set(inputs.get(jason.get(i).get(j).substring(0,1)),jason.get(i).get(j).substring(1,2));
+                } else {
+                    transitions.get(i).set(inputs.get(jason.get(i).get(j).substring(0,1)),"X");
+                }
             }
         }
 
