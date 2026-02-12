@@ -24,7 +24,11 @@ public class Main {
 
         System.out.println(fa);
 
-        System.out.println(fa.checkWord("ae"));
+        if(fa.checkWord("ae")) {
+            System.out.println("The word is eligible");
+        } else {
+            System.out.println("The word is not eligible");
+        }
 
     }
 }
