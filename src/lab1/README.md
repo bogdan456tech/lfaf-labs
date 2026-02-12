@@ -17,7 +17,7 @@ The program generates random words from the grammar and constructs the equivalen
 ## Objectives
 
 1. Implement a class to represent a regular grammar.
-2. Generate words from the grammar randomly.
+2. Generate words from the grammar randomly, in a generalizable way.
 3. Convert the regular grammar into a finite automaton.
 4. Implement a finite automaton class that can check whether a word belongs to the language.
 5. Display transitions, states, and check sample words.
@@ -26,45 +26,30 @@ The program generates random words from the grammar and constructs the equivalen
 
 ## Implementation Description
 
-1. **Grammar Class**
-    - Holds the variables (`vn`), terminals (`vt`), and production rules.
-    - Method `generateString()` randomly generates a string based on the productions.
-    - Method `toFiniteAutomaton()` converts the grammar into a `FiniteAutomaton` object.
+### 1. Grammar Class
 
-2. **FiniteAutomaton Class**
-    - Holds states, input alphabet, initial and final states, and transitions.
-    - Method `checkWord()` validates if a string belongs to the language.
-    - Overrides `toString()` to print the automaton's details in readable format.
+The `Grammar` class holds all elements of a regular grammar. It stores the variables (`vn`), which are the non-terminal symbols of the grammar, the terminals (`vt`), which represent the alphabet symbols, and the production rules (`production`), which map each non-terminal to a list of possible derivations.
 
-3. **Main Class**
-    - Creates a sample grammar.
-    - Generates and prints 5 random words.
-    - Converts the grammar to a finite automaton and prints it.
-    - Checks whether a specific word is accepted by the automaton.
+The class provides two main methods. The `generateString()` method initially used a variant-specific and more complex approach that was hardcoded for my assignment variant. After reworking, I implemented a general approach capable of generating words from any regular grammar. The method works by starting from the initial symbol `"S"` and randomly choosing productions, following non-terminals until a terminal-only string is formed. The resulting string is then returned as output.
+
+The `toFiniteAutomaton()` method was initially implemented using a 2D array to represent transitions between terminals and non-terminals, which proved cumbersome and less flexible. Later, I reworked it to use a combination of `HashMap` and lists of strings, resulting in cleaner and more maintainable code. This method creates a transition table, maps terminal-only productions to an accepting state `"X"`, and returns a `FiniteAutomaton` object corresponding to the grammar.
 
 ---
 
-## Code Snippets
+### 2. FiniteAutomaton Class
 
-```java
-public static void main(String[] args) {
-    Grammar grammar = new Grammar(
-            List.of("S", "P", "Q"),
-            List.of("a", "b", "c", "d", "e", "f"),
-            Map.of(
-                    "S", List.of("aP", "bQ"),
-                    "P", List.of("bP", "cP", "dQ", "e"),
-                    "Q", List.of("eQ", "fQ", "a")
-            )
-    );
+The `FiniteAutomaton` class represents the converted automaton. It includes all original grammar variables as states, plus a final accepting state `"X"`. The input alphabet consists of the terminals of the grammar. The initial state is `"S"` and the final state is `"X"`. Transitions are represented as a 2D table mapping each current state and input symbol to the next state.
 
-    System.out.println("5 words:");
-    for(int i=0; i<5; i++) {
-        System.out.println(grammar.generateString());
-    }
+The `checkWord(String word)` method was initially implemented using multiple loops and operations, which made it more complex and inefficient. After reworking, it became a more efficient implementation that iterates through the input string and follows transitions to determine whether a word is accepted. The `toString()` method provides a readable representation of the finite automaton, showing states, alphabet, initial and final states, and transitions.
 
-    FiniteAutomaton fa = grammar.toFiniteAutomaton();
+---
 
-    System.out.println(fa);
-    System.out.println(fa.checkWord("ae"));
-}
+### 3. Main Class
+
+The `Main` class demonstrates the program. It creates a sample grammar with non-terminals `S, P, Q` and terminals `a, b, c, d, e, f`. It generates 5 random words from the grammar and prints them. Then, it converts the grammar to a finite automaton using `toFiniteAutomaton()` and prints its transitions. Finally, it checks whether a specific word (e.g., `"ae"`) is accepted by the automaton and prints the result.
+
+---
+
+## Conclusions
+
+The project demonstrates the correspondence between regular grammars and finite automata. Initially, some methods were implemented in a variant-specific or more complex way, but after reworking, I achieved general solutions applicable to any regular grammar. The final implementation allows random word generation, conversion to a finite automaton, and efficient word acceptance checking. The exercise improved understanding of formal languages, automata theory, and practical Java programming. The project can be extended to handle more complex grammars or include visualization of the automaton.
