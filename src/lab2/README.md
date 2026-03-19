@@ -1,6 +1,6 @@
 # Regular Grammar and Finite Automaton Conversion
 
-**Course:** Formal Languages & Finite Automata  
+**Course:** Formal Languages & Finite Automata
 **Author:** Bogdan Arama
 
 ---
@@ -26,6 +26,10 @@ The `FiniteAutomaton` class represents either an NDFA or a DFA. It maintains a s
 The `Grammar` class stores the regular grammar derived from the automaton. It contains a map of production rules, mapping each non-terminal to a list of possible derivations. The `addProduction()` method allows adding new rules, while `printGrammar()` outputs all grammar rules in a readable format. The `classify()` method returns the grammar type according to Chomsky hierarchy, indicating that it is a Type 3 regular grammar.
 
 The `Main` class demonstrates the program workflow. It creates the NDFA for the specific variant, with states q0, q1, q2, and q3, input alphabet consisting of the symbols a, b, and c, and the final state q2. The transitions include multiple possible states for the same input symbol, representing non-determinism. The program first checks whether the automaton is deterministic. Then it converts the NDFA into a regular grammar and prints the rules. Finally, it converts the NDFA into a DFA using the subset construction method, printing all DFA transitions and final states.
+
+The DFA constructed by the program can be visualized as follows:
+
+![DFA Diagram](src/lab2/images/diagram.jpg)
 
 The program produces output indicating whether the automaton is deterministic, the list of regular grammar production rules, the transitions of the DFA, and the final states of the DFA. For example, the NDFA is non-deterministic because the transition δ(q0, a) has multiple possible destinations. The DFA is constructed correctly, with each state representing a set of NDFA states, and the regular grammar accurately reflects the NDFA transitions.
 
